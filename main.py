@@ -31,7 +31,7 @@ with st.sidebar:
     st.title('About')
     st.markdown('''
         This is a Proof Of Concept (POC). 
-        The goal is to use AI to generate a Summary and Bullet points of the uploaded video.
+        The goal is to use AI to generate a Summary and Bullet points of the uploaded file.
         - OpenAI's Whisper transcribes audio to text.
         - OpanAI's GPT API generates Summary & bullet.
               
