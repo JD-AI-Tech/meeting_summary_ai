@@ -24,14 +24,14 @@ title_template = PromptTemplate(
 llm = OpenAI(temperature=0.6)
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True)
 
-st.title('🦜🔗 Meeting Notes Generator')
+st.title('Video and Audio transcribing and summary Generation')
 st.subheader("Please upload audio or video file to summarize (mp3 or mp4)")
 
 with st.sidebar:
     st.title('About')
     st.markdown('''
         This is a Proof Of Concept (POC). 
-        The goal is to use AI to generate a Summary and Bullet points of the uploaded file.
+        The goal is to use AI to generate a Summary and Bullet points of the uploaded video and audio files.
         - OpenAI's Whisper transcribes audio to text.
         - OpanAI's GPT API generates Summary & bullet.
               
@@ -79,6 +79,7 @@ if uploaded_file is not None:
         st.info(first_prompt)
 
     with st.expander("Transcribed text"):
+        st.download_button("download", second_prompt, file_name=uploaded_file.name + ".txt")
         st.info(second_prompt)
 
     st.write(response)
