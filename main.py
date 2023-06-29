@@ -75,6 +75,7 @@ if uploaded_file is not None:
         st.info(first_prompt)
 
     with st.expander("Transcribed text"):
+        st.download_button("download", second_prompt, file_name=uploaded_file.name + ".txt")
         st.info(second_prompt)
 
     st.write(response)
