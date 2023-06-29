@@ -25,7 +25,7 @@ llm = OpenAI(temperature=0.6)
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True)
 
 st.title('🦜🔗 Meeting Notes Generator')
-st.subheader("Please upload meeting video file to summarize (mp4)")
+st.subheader("Please upload audio or video file to summarize (mp3 or mp4)")
 
 with st.sidebar:
     st.title('About')
@@ -48,16 +48,20 @@ with st.sidebar:
         - [Pycharm IDE](https://www.jetbrains.com/pycharm/)   
     ''')
 
-uploaded_file = st.file_uploader('', type=['mp4'])
+uploaded_file = st.file_uploader('', type=['mp4', 'mp3'])
 # extract audio from uploaded video (mp4) file
 if uploaded_file is not None:
     with open(os.path.join(data_directory, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
     saved_file_name = data_directory + "/" + uploaded_file.name
 
-    # extra audio from MP4
-    st.write("Extracting audio from video file:  " + saved_file_name)
-    new_audio_file = extract_audio(saved_file_name)
+    extension = uploaded_file.name.split('.')[-1].lower()
+    if extension == 'mp4':
+        # extra audio from MP4
+        st.write("Extracting audio from video file:  " + saved_file_name)
+        new_audio_file = extract_audio(saved_file_name)
+    else:
+        new_audio_file = saved_file_name
 
     # transcribing audio (mp3) into text file
     st.write("Transcribing audio to text using OpenAI's Whisper neural net ")
